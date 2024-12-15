@@ -1,9 +1,4 @@
-import { openModal } from './modal';
-
 const cardTemplate = document.querySelector("#card-template").content;
-const popupTypeImage = document.querySelector('.popup_type_image');
-const popupImage = document.querySelector('.popup__image');
-const popupCaption = document.querySelector('.popup__caption');
 
 export const initialCards = [
     {
@@ -64,10 +59,3 @@ export const deleteCard = (evt) => {
   listItem.remove();
 };
 
-export function openImageCard(imageSource, imageName) {
-  popupImage.src = imageSource;
-  popupImage.alt = imageName;
-  popupCaption.textContent = imageName;
-  openModal(popupTypeImage);
-};
-  
