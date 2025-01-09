@@ -17,7 +17,7 @@ export const createCard = (item, deleteCardPopup, likeCardClick, openImageCard, 
 
   // проверяем ставили ли уже лайк карточке
   const isLiked = item.likes.some((like) => {
-    like._id === userId
+    return like._id === userId
     })
   if (isLiked) {
     likeCardButton.classList.add('card__like-button_is-active');
