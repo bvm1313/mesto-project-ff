@@ -37,23 +37,11 @@ export const createCard = (item, deleteCardPopup, likeCardClick, openImageCard, 
 };
 
 export const likeCardClick = (likeIcon, cardId, allLikes) => {
-  if (!likeIcon.classList.contains('card__like-button_is-active')) {
-    pushLike(cardId)
-      .then((likeCard) => {
-        likeIcon.classList.add('card__like-button_is-active');
-        allLikes.textContent = likeCard.likes.length;
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  } else {
-    deletLike(cardId)
-      .then((likeCard) => {
-      likeIcon.classList.remove('card__like-button_is-active');
-      allLikes.textContent = likeCard.likes.length;
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
+  const likeMethod = likeIcon.classList.contains('card__like-button_is-active') ? deletLike : pushLike;
+likeMethod(cardId) 
+  .then((likeCard) => { 
+    likeIcon.classList.toggle('card__like-button_is-active'); 
+    allLikes.textContent = likeCard.likes.length;
+  })
+.catch(err => console.log(err));
 };

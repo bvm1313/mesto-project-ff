@@ -1,5 +1,5 @@
 import '../styles/index.css';
-import { createCard, likeCardClick } from './cards.js';
+import { createCard, likeCardClick } from './card.js';
 import { openModal, closeModal} from './modal.js';
 import { enableValidation, clearValidation } from './validation.js';
 import { getInfoUser, patchAvatarUpdate, getAllCards, patchEditProfile, postNewCard, deleteCardId} from './api.js';
@@ -39,15 +39,15 @@ let userId = null;
 let cardIdWillBeDelete = null;
 let cardDelete = null;
 
-const renderingCards = (cards, deleteCardPopup, likeCardClick, openImageCard, userId) => {
+const renderedCards = (cards, deleteCardPopup, likeCardClick, openImageCard, userId) => {
   cards.forEach((item) => {
     const card = createCard(item, deleteCardPopup, likeCardClick, openImageCard, userId);
     placesList.append(card);
   });
 };
 
-const renderLoading = (isLoading, button) => {
-  button.textContent = isLoading ? "Сохранение..." : "Сохранить";
+const renderedLoad = (isLoad, button) => {
+  button.textContent = isLoad ? "Сохранение..." : "Сохранить";
 };
 
 const openImageCard = (imageSource, imageName) => {
@@ -90,7 +90,7 @@ Promise.all([getInfoUser(), getAllCards()])
   formProfileTitle.textContent = infoUser.name;
   formProfileDescription.textContent = infoUser.about;
   formProfileImage.style.backgroundImage = `url(${infoUser.avatar})`;
-  renderingCards(allCards, deleteCardPopup, likeCardClick, openImageCard, userId);
+  renderedCards(allCards, deleteCardPopup, likeCardClick, openImageCard, userId);
 })
 .catch((err) => {
   console.log(err);
@@ -100,7 +100,7 @@ Promise.all([getInfoUser(), getAllCards()])
 const editProfileFormSubmit = (evt) => {
   evt.preventDefault(); 
   const popupButton = formElementProfile.querySelector('.popup__button');
-  renderLoading(true, popupButton);
+  renderedLoad(true, popupButton);
   const newName = nameInput.value;
   const newJob = jobInput.value;
   patchEditProfile(newName, newJob)
@@ -113,7 +113,7 @@ const editProfileFormSubmit = (evt) => {
     console.log(err);
    })
    .finally(()=> {
-    renderLoading(false, popupButton);
+    renderedLoad(false, popupButton);
    })
 };
 
@@ -121,7 +121,7 @@ const editProfileFormSubmit = (evt) => {
 const editProfileAvatar = (evt) => {
   evt.preventDefault();
   const popupButton = formAvatar.querySelector('.popup__button');
-  renderLoading(true, popupButton);
+  renderedLoad(true, popupButton);
   const newAvatar = avatarInput.value;
   patchAvatarUpdate(newAvatar)
     .then((newUrl) => {
@@ -132,7 +132,7 @@ const editProfileAvatar = (evt) => {
       console.log(err)
     })
     .finally(()=> {
-      renderLoading(false, popupButton);
+      renderedLoad(false, popupButton);
      })
 }
 
@@ -140,7 +140,7 @@ const editProfileAvatar = (evt) => {
 const addNewPlaceFormsSubmit = (evt) => {
   evt.preventDefault();
   const popupButton = formCard.querySelector('.popup__button');
-  renderLoading(true, popupButton);
+  renderedLoad(true, popupButton);
   const newNameCard = namePlaceCard.value;
   const newLinkCard = linkPlaceCard.value;
   postNewCard(newNameCard, newLinkCard)
@@ -154,7 +154,7 @@ const addNewPlaceFormsSubmit = (evt) => {
       console.log(err);
     })
     .finally(() => {
-      renderLoading(false, popupButton);
+      renderedLoad(false, popupButton);
     })
 };
 

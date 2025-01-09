@@ -16,7 +16,7 @@ const isValid = (formElement, inputElement, inputErrorClass, errorClass) => {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
-    inputElement.setCustomValidity("");
+    inputElement.setCustomValidity('');
   }
 
   if (!inputElement.validity.valid) {
@@ -32,10 +32,14 @@ const hasInvalidInput = (inputList) => {
   })
 };
 
+const disableSubmitButton = (button, inactiveButtonClass) => {
+  button.disabled = true;
+  button.classList.add(inactiveButtonClass);
+}
+
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.disabled = true;
-    buttonElement.classList.add(inactiveButtonClass);
+    disableSubmitButton(buttonElement, inactiveButtonClass); 
   } else {
     buttonElement.disabled = false;
     buttonElement.classList.remove(inactiveButtonClass);
@@ -71,6 +75,5 @@ export const clearValidation = (formElement, popupFormConfig) => {
    hideInputError(formElement, inputElement, popupFormConfig.inputErrorClass,
     popupFormConfig.errorClass)
   });
-  // buttonElement.disabled = true;
-  buttonElement.classList.add(popupFormConfig.inactiveButtonClass);
-};
+  disableSubmitButton(buttonElement, popupFormConfig.inactiveButtonClass);
+}
