@@ -22,4 +22,3 @@ const closeEscButton = (event) => {
     closeModal(evt.currentTarget);
   };
  };
-
